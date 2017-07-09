@@ -1,5 +1,6 @@
 
 
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -7,6 +8,10 @@ import javax.swing.*;
 public class Client extends JFrame {
     private ChessBoard board;
     private BorderLayout layout;
+    private JMenuBar bar = new JMenuBar();
+    private JMenu gameMenu = new JMenu("Game Menu");
+    private JMenuItem resetItem = new JMenuItem("Reset");
+    private JMenuItem exitItem = new JMenuItem("Exit");
 
     public Client() {
         super("Chess Client");
@@ -18,8 +23,24 @@ public class Client extends JFrame {
         this.board = new ChessBoard(this);
         localContainer.add(this.board, "Center");
 
+        setJMenuBar(this.bar);
 
+        this.gameMenu.add(this.resetItem);
+        this.gameMenu.add(this.exitItem);
 
+        this.bar.add(this.gameMenu);
+
+        this.exitItem.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent paramAnonymousActionEvent){
+                System.exit(0);
+            }
+        });
+
+        this.resetItem.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent paramAnonymousActionEvent){
+                Client.this.board.resetBoard();
+            }
+        });
         setResizable(false);
         setSize(400, 470);
     }
